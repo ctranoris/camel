@@ -19,6 +19,7 @@ package org.apache.camel.dataformat.csv;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.Collections;
@@ -32,18 +33,19 @@ import org.apache.camel.Produce;
 import org.apache.camel.ProducerTemplate;
 import org.apache.camel.RoutesBuilder;
 import org.apache.camel.builder.RouteBuilder;
-import org.apache.camel.test.junit4.CamelTestSupport;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.TemporaryFolder;
+import org.apache.camel.test.junit5.CamelTestSupport;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * <b>Camel</b> based test cases for {@link org.apache.camel.dataformat.csv.CsvDataFormat}.
  */
 public class CsvMarshalHeaderTest extends CamelTestSupport {
 
-    @Rule
-    public TemporaryFolder folder = new TemporaryFolder();
+    @TempDir
+    public Path folder;
 
     @Produce("direct:start")
     private ProducerTemplate producerTemplate;
@@ -52,7 +54,7 @@ public class CsvMarshalHeaderTest extends CamelTestSupport {
 
     @Override
     protected void doPreSetup() throws Exception {
-        outputFile = new File(folder.newFolder(), "output.csv");
+        outputFile = new File(folder.toFile(), "output.csv");
     }
 
     @Test

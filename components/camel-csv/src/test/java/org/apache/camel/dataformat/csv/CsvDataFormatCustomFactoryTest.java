@@ -20,9 +20,9 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.apache.camel.component.mock.MockEndpoint;
-import org.apache.camel.test.spring.CamelSpringTestSupport;
-import org.junit.Assert;
-import org.junit.Test;
+import org.apache.camel.test.junit5.spring.CamelSpringTestSupport;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 public class CsvDataFormatCustomFactoryTest extends CamelSpringTestSupport {
@@ -38,9 +38,9 @@ public class CsvDataFormatCustomFactoryTest extends CamelSpringTestSupport {
         String body = mock.getReceivedExchanges().get(0).getIn().getBody(String.class);
         String[] lines = body.split("\r\n");
 
-        Assert.assertEquals(2, lines.length);
-        Assert.assertEquals("A1:B1:C1", lines[0].trim());
-        Assert.assertEquals("A2:B2:C2", lines[1].trim());
+        Assertions.assertEquals(2, lines.length);
+        Assertions.assertEquals("A1:B1:C1", lines[0].trim());
+        Assertions.assertEquals("A2:B2:C2", lines[1].trim());
     }
 
     private List<List<String>> getData() {
