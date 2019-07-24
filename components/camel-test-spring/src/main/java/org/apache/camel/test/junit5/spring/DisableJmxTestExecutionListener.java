@@ -17,6 +17,7 @@
 package org.apache.camel.test.junit5.spring;
 
 import org.apache.camel.api.management.JmxSystemPropertyKeys;
+import org.springframework.core.Ordered;
 import org.springframework.test.context.TestContext;
 import org.springframework.test.context.support.AbstractTestExecutionListener;
 
@@ -26,6 +27,15 @@ import org.springframework.test.context.support.AbstractTestExecutionListener;
  * Tries to ensure that the pre-test value is restored.
  */
 public class DisableJmxTestExecutionListener extends AbstractTestExecutionListener {
+
+    /**
+     * Ensure proper order of test execution listeners.
+     * @TODO: centralize in a kind of util precedence class ?
+     */
+    @Override
+    public int getOrder() {
+        return Ordered.HIGHEST_PRECEDENCE + 2000;
+    }
 
     @Override
     public void afterTestClass(TestContext testContext) throws Exception {

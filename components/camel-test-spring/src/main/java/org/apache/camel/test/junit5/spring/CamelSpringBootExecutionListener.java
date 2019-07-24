@@ -20,6 +20,7 @@ import org.apache.camel.spring.SpringCamelContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.core.Ordered;
 import org.springframework.test.context.TestContext;
 import org.springframework.test.context.support.AbstractTestExecutionListener;
 
@@ -28,6 +29,15 @@ public class CamelSpringBootExecutionListener extends AbstractTestExecutionListe
     protected static ThreadLocal<ConfigurableApplicationContext> threadApplicationContext = new ThreadLocal<>();
 
     private static final Logger LOG = LoggerFactory.getLogger(CamelSpringBootExecutionListener.class);
+
+    /**
+     * Ensure proper order of test execution listeners.
+     * @TODO: centralize in a kind of util precedence class ?
+     */
+    @Override
+    public int getOrder() {
+        return Ordered.HIGHEST_PRECEDENCE + 3000;
+    }
 
     @Override
     public void prepareTestInstance(TestContext testContext) throws Exception {

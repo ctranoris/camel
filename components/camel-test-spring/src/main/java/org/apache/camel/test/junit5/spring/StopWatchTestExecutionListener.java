@@ -20,6 +20,7 @@ import org.apache.camel.util.StopWatch;
 import org.apache.camel.util.TimeUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.core.Ordered;
 import org.springframework.test.context.TestContext;
 import org.springframework.test.context.support.AbstractTestExecutionListener;
 
@@ -35,6 +36,15 @@ public class StopWatchTestExecutionListener extends AbstractTestExecutionListene
      */
     public static StopWatch getStopWatch() {
         return threadStopWatch.get();
+    }
+    
+    /**
+     * Ensure proper order of test execution listeners.
+     * @TODO: centralize in a kind of util precedence class ?
+     */
+    @Override
+    public int getOrder() {
+        return Ordered.HIGHEST_PRECEDENCE + 4000;
     }
     
     @Override
